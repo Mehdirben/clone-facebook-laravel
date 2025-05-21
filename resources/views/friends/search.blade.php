@@ -68,12 +68,14 @@
                                                 <div class="btn-group">
                                                     <form action="{{ route('friends.accept', $user->friendship) }}" method="POST" class="d-inline">
                                                         @csrf
+                                                        @method('PATCH')
                                                         <button type="submit" class="btn btn-sm btn-success">
                                                             <i class="fas fa-check me-1"></i> Accepter
                                                         </button>
                                                     </form>
                                                     <form action="{{ route('friends.reject', $user->friendship) }}" method="POST" class="d-inline">
                                                         @csrf
+                                                        @method('PATCH')
                                                         <button type="submit" class="btn btn-sm btn-danger">
                                                             <i class="fas fa-times me-1"></i> Refuser
                                                         </button>

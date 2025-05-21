@@ -23,10 +23,12 @@
                                     <div>
                                         <form action="{{ route('friends.accept', $request) }}" method="POST" class="d-inline">
                                             @csrf
+                                            @method('PATCH')
                                             <button type="submit" class="btn btn-primary btn-sm">Accepter</button>
                                         </form>
                                         <form action="{{ route('friends.reject', $request) }}" method="POST" class="d-inline">
                                             @csrf
+                                            @method('PATCH')
                                             <button type="submit" class="btn btn-outline-danger btn-sm">Refuser</button>
                                         </form>
                                     </div>

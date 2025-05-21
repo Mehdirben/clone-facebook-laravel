@@ -32,6 +32,12 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                            <div class="me-2">
+                                <img src="{{ Auth::user()->profile && Auth::user()->profile->profile_picture 
+                                    ? asset('storage/' . Auth::user()->profile->profile_picture) 
+                                    : asset('images/default-avatar.svg') }}" 
+                                    class="rounded-circle border" style="width: 30px; height: 30px; object-fit: cover;" alt="Avatar">
+                            </div>
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -43,8 +49,11 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <x-dropdown-link :href="route('profile.show', Auth::user())">
+                            <i class="fas fa-user me-1"></i> {{ __('Mon profil') }}
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('profile.edit')">
-                            <i class="fas fa-user-edit me-1"></i> {{ __('Profile') }}
+                            <i class="fas fa-cog me-1"></i> {{ __('Paramètres') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -98,8 +107,11 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('profile.show', Auth::user())">
+                    <i class="fas fa-user me-1"></i> {{ __('Mon profil') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    <i class="fas fa-user-edit me-1"></i> {{ __('Profile') }}
+                    <i class="fas fa-cog me-1"></i> {{ __('Paramètres') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

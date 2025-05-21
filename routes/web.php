@@ -43,6 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Amis
     Route::get('/friends', [FriendController::class, 'index'])->name('friends.index');
     Route::get('/friends/suggestions', [FriendController::class, 'suggestions'])->name('friends.suggestions');
+    Route::get('/friends/search', [FriendController::class, 'search'])->name('friends.search');
     Route::post('/friends/{user}', [FriendController::class, 'sendRequest'])->name('friends.request');
     Route::patch('/friends/{friend}/accept', [FriendController::class, 'acceptRequest'])->name('friends.accept');
     Route::patch('/friends/{friend}/reject', [FriendController::class, 'rejectRequest'])->name('friends.reject');

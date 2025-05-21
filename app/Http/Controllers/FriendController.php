@@ -141,30 +141,103 @@ class FriendController extends Controller
     /**
      * Suggestions d'amis pour l'utilisateur
      */
-    public function suggestions()
+    public function suggestions(Request $request)
     {
         $user = Auth::user();
+        $search = $request->input('search');
         
-        // Récupérer les IDs des amis (utilisateurs avec des demandes acceptées)
-        $sentFriendIds = Friend::where('user_id', $user->id)
-            ->where('status', 'accepted')
+        // Récupérer les IDs des amis et des demandes en cours
+        $friendIds = $this->getFriendAndRequestIds($user->id);
+        
+        // Suggérer des utilisateurs qui ne sont pas encore amis
+        $suggestions = User::whereNotIn('id', $friendIds);
+        
+        // Filtrer par recherche si présente
+        if ($search) {
+            $suggestions = $suggestions->where(function($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+        
+        // Récupérer les résultats
+        $suggestions = $suggestions->orderBy('name')
+            ->paginate(12)
+            ->withQueryString();
+        
+        // Récupérer des utilisateurs populaires ou au hasard si aucun résultat avec la recherche
+        $randomSuggestions = collect();
+        if ($suggestions->isEmpty() && !$search) {
+            $randomSuggestions = User::whereNotIn('id', $friendIds)
+                ->inRandomOrder()
+                ->limit(8)
+                ->get();
+        }
+        
+        return view('friends.suggestions', compact('suggestions', 'randomSuggestions', 'search'));
+    }
+    
+    /**
+     * Rechercher des utilisateurs à ajouter comme amis
+     */
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $user = Auth::user();
+        
+        // Récupérer les IDs des amis et des demandes en cours
+        $friendIds = $this->getFriendAndRequestIds($user->id);
+        
+        // Si la recherche est vide, rediriger vers les suggestions
+        if (!$search) {
+            return redirect()->route('friends.suggestions');
+        }
+        
+        // Rechercher des utilisateurs par nom ou email
+        $users = User::where('id', '!=', $user->id)
+            ->where(function($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->orderBy('name')
+            ->paginate(20)
+            ->withQueryString();
+        
+        // Pour chaque utilisateur, déterminer la relation d'amitié
+        foreach ($users as $potentialFriend) {
+            $friendship = Friend::where(function($query) use ($user, $potentialFriend) {
+                    $query->where('user_id', $user->id)->where('friend_id', $potentialFriend->id);
+                })
+                ->orWhere(function($query) use ($user, $potentialFriend) {
+                    $query->where('user_id', $potentialFriend->id)->where('friend_id', $user->id);
+                })
+                ->first();
+            
+            $potentialFriend->friendship = $friendship;
+        }
+        
+        return view('friends.search', compact('users', 'search'));
+    }
+    
+    /**
+     * Helper pour récupérer les IDs des amis et des demandes en cours
+     */
+    private function getFriendAndRequestIds($userId)
+    {
+        // Récupérer les IDs des amis (acceptés)
+        $sentFriendIds = Friend::where('user_id', $userId)
+            ->whereIn('status', ['accepted', 'pending'])
             ->pluck('friend_id')
             ->toArray();
             
-        $receivedFriendIds = Friend::where('friend_id', $user->id)
-            ->where('status', 'accepted')
+        $receivedFriendIds = Friend::where('friend_id', $userId)
+            ->whereIn('status', ['accepted', 'pending'])
             ->pluck('user_id')
             ->toArray();
             
         $friendIds = array_merge($sentFriendIds, $receivedFriendIds);
-        $friendIds[] = $user->id; // Exclure l'utilisateur lui-même
+        $friendIds[] = $userId; // Exclure l'utilisateur lui-même
         
-        // Suggérer des utilisateurs qui ne sont pas encore amis
-        $suggestions = User::whereNotIn('id', $friendIds)
-            ->inRandomOrder()
-            ->limit(10)
-            ->get();
-            
-        return view('friends.suggestions', compact('suggestions'));
+        return $friendIds;
     }
 }

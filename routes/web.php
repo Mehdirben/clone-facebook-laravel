@@ -42,11 +42,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // Amis
     Route::get('/friends', [FriendController::class, 'index'])->name('friends.index');
+    Route::get('/friends/suggestions', [FriendController::class, 'suggestions'])->name('friends.suggestions');
     Route::post('/friends/{user}', [FriendController::class, 'sendRequest'])->name('friends.request');
     Route::patch('/friends/{friend}/accept', [FriendController::class, 'acceptRequest'])->name('friends.accept');
     Route::patch('/friends/{friend}/reject', [FriendController::class, 'rejectRequest'])->name('friends.reject');
     Route::delete('/friends/{friend}', [FriendController::class, 'removeFriend'])->name('friends.remove');
-    Route::get('/friends/suggestions', [FriendController::class, 'suggestions'])->name('friends.suggestions');
     
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

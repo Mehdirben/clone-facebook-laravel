@@ -13,7 +13,16 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        <i class="fas fa-home me-1"></i> {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('friends.index')" :active="request()->routeIs('friends.*')">
+                        <i class="fas fa-user-friends me-1"></i> {{ __('Amis') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.*')">
+                        <i class="fas fa-comment me-1"></i> {{ __('Messages') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
+                        <i class="fas fa-bell me-1"></i> {{ __('Notifications') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -35,7 +44,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            <i class="fas fa-user-edit me-1"></i> {{ __('Profile') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -45,7 +54,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                <i class="fas fa-sign-out-alt me-1"></i> {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -68,7 +77,16 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                <i class="fas fa-home me-1"></i> {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('friends.index')" :active="request()->routeIs('friends.*')">
+                <i class="fas fa-user-friends me-1"></i> {{ __('Amis') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.*')">
+                <i class="fas fa-comment me-1"></i> {{ __('Messages') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
+                <i class="fas fa-bell me-1"></i> {{ __('Notifications') }}
             </x-responsive-nav-link>
         </div>
 
@@ -81,7 +99,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    <i class="fas fa-user-edit me-1"></i> {{ __('Profile') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -91,7 +109,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        <i class="fas fa-sign-out-alt me-1"></i> {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

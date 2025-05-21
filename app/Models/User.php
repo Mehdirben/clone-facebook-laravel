@@ -81,6 +81,14 @@ class User extends Authenticatable
     }
     
     /**
+     * Relation avec les partages
+     */
+    public function shares(): HasMany
+    {
+        return $this->hasMany(Share::class);
+    }
+    
+    /**
      * Demandes d'amis envoyées
      */
     public function sentFriendRequests(): HasMany

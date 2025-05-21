@@ -8,6 +8,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShareController;
 use Illuminate\Support\Facades\Route;
 
 // Routes publiques
@@ -39,6 +40,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/comments/{comment}/like', [LikeController::class, 'likeComment'])->name('comments.like');
     Route::delete('/posts/{post}/unlike', [LikeController::class, 'unlikePost'])->name('posts.unlike');
     Route::delete('/comments/{comment}/unlike', [LikeController::class, 'unlikeComment'])->name('comments.unlike');
+    
+    // Partages
+    Route::post('/posts/{post}/share', [ShareController::class, 'store'])->name('posts.share');
+    Route::patch('/shares/{share}', [ShareController::class, 'update'])->name('shares.update');
+    Route::delete('/shares/{share}', [ShareController::class, 'destroy'])->name('shares.destroy');
     
     // Amis
     Route::get('/friends', [FriendController::class, 'index'])->name('friends.index');

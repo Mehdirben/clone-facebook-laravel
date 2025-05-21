@@ -27,7 +27,13 @@ class ProfileController extends Controller
             ->when($user->id !== Auth::id(), function($query) {
                 return $query->where('is_public', true);
             })
-            ->with(['user', 'comments.user', 'likes'])
+            ->with(['user', 'comments.user', 'likes', 'shares'])
+            ->latest()
+            ->paginate(10);
+            
+        // Récupérer les publications partagées par l'utilisateur
+        $sharedPosts = $user->shares()
+            ->with(['post.user', 'post.comments.user', 'post.likes'])
             ->latest()
             ->paginate(10);
             
@@ -43,7 +49,7 @@ class ProfileController extends Controller
                 ->first();
         }
         
-        return view('profile.show', compact('user', 'posts', 'friendship'));
+        return view('profile.show', compact('user', 'posts', 'sharedPosts', 'friendship'));
     }
 
     /**

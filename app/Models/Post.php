@@ -62,11 +62,27 @@ class Post extends Model
     }
     
     /**
+     * Relation avec les partages
+     */
+    public function shares(): HasMany
+    {
+        return $this->hasMany(Share::class);
+    }
+    
+    /**
      * Méthode pour vérifier si un post est aimé par un utilisateur
      */
     public function isLikedBy(User $user)
     {
         return $this->likes()->where('user_id', $user->id)->exists();
+    }
+    
+    /**
+     * Méthode pour vérifier si un post est partagé par un utilisateur
+     */
+    public function isSharedBy(User $user)
+    {
+        return $this->shares()->where('user_id', $user->id)->exists();
     }
     
     /**
@@ -83,5 +99,13 @@ class Post extends Model
     public function getCommentsCountAttribute()
     {
         return $this->comments()->count();
+    }
+    
+    /**
+     * Obtenir le nombre de partages
+     */
+    public function getSharesCountAttribute()
+    {
+        return $this->shares()->count();
     }
 }

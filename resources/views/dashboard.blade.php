@@ -50,10 +50,14 @@
                     <!-- Formulaire de création de post -->
                     <x-post-form />
 
-                    <!-- Liste des publications -->
+                    <!-- Liste des publications et partages -->
                     <div class="space-y-6">
-                        @forelse ($posts as $post)
-                            <x-post-card :post="$post" />
+                        @forelse ($posts as $item)
+                            @if ($item instanceof \App\Models\Post)
+                                <x-post-card :post="$item" />
+                            @elseif ($item instanceof \App\Models\Share)
+                                <x-shared-post-card :share="$item" />
+                            @endif
                         @empty
                             <div class="bg-white rounded-lg shadow p-6 text-center">
                                 <p class="text-gray-500">Aucune publication à afficher pour le moment.</p>

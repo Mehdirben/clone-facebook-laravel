@@ -1,12 +1,4 @@
-<div class="bg-white shadow rounded-lg mb-4 p-4">
-    <div class="flex items-start">
-        @if ($post->user->profile && $post->user->profile->profile_picture)
-            <img src="{{ Storage::url($post->user->profile->profile_picture) }}" alt="{{ $post->user->name }}" class="w-10 h-10 rounded-full mr-3">
-        @else
-            <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
-                <span class="text-gray-600 text-sm font-bold">{{ substr($post->user->name, 0, 1) }}</span>
-            </div>
-        @endif
+<div class="bg-white shadow rounded-lg mb-4 p-4" x-data="{ showCommentForm: false, showShareForm: false, isLiked: {{ $post->isLikedBy(Auth::user()) ? 'true' : 'false' }}, likesCount: {{ $post->likes()->count() }} }">    <div class="flex items-start">        @if ($post->user->profile && $post->user->profile->profile_picture)            <img src="{{ Storage::url($post->user->profile->profile_picture) }}" alt="{{ $post->user->name }}" class="w-10 h-10 rounded-full mr-3">        @else            <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">                <span class="text-gray-600 text-sm font-bold">{{ substr($post->user->name, 0, 1) }}</span>            </div>        @endif
         
         <div class="flex-1">
             <div class="flex items-center justify-between mb-1">
@@ -56,56 +48,87 @@
             
             <div class="flex justify-between items-center text-gray-500 border-t border-b py-2 mb-3">
                 <div>
-                    @php
-                        $likesCount = $post->likes()->count();
-                    @endphp
-                    @if ($likesCount > 0)
-                        <span><i class="fas fa-thumbs-up text-blue-600"></i> {{ $likesCount }}</span>
-                    @endif
+                    <span x-show="likesCount > 0"><i class="fas fa-thumbs-up text-blue-600"></i> <span x-text="likesCount"></span></span>
                 </div>
-                <div>
+                <div class="flex space-x-4">
                     @php
                         $commentsCount = $post->comments()->count();
+                        $sharesCount = $post->shares()->count();
                     @endphp
                     @if ($commentsCount > 0)
                         <span>{{ $commentsCount }} commentaire(s)</span>
+                    @endif
+                    @if ($sharesCount > 0)
+                        <span>{{ $sharesCount }} partage(s)</span>
                     @endif
                 </div>
             </div>
             
             <div class="flex justify-around mb-3">
-                @php
-                    $liked = $post->likes()->where('user_id', Auth::id())->first();
-                @endphp
+                <button 
+                    @click="
+                        isLiked = !isLiked;
+                        if (isLiked) {
+                            likesCount++;
+                            fetch('{{ route('posts.like', $post) }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                }
+                            });
+                        } else {
+                            likesCount--;
+                            fetch('{{ route('posts.unlike', $post) }}', {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                }
+                            });
+                        }
+                    " 
+                    :class="isLiked ? 'text-blue-600' : 'text-gray-600'" 
+                    class="flex items-center hover:bg-gray-100 px-3 py-1 rounded"
+                >
+                    <i :class="isLiked ? 'fas fa-thumbs-up' : 'far fa-thumbs-up'" class="mr-1"></i> J'aime
+                </button>
                 
-                @if ($liked)
-                    <form action="{{ route('posts.unlike', $post) }}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="flex items-center text-blue-600 hover:bg-gray-100 px-3 py-1 rounded">
-                            <i class="fas fa-thumbs-up mr-1"></i> J'aime
-                        </button>
-                    </form>
-                @else
-                    <form action="{{ route('posts.like', $post) }}" method="POST" class="inline">
-                        @csrf
-                        <input type="hidden" name="type" value="like">
-                        <button type="submit" class="flex items-center text-gray-600 hover:bg-gray-100 px-3 py-1 rounded">
-                            <i class="far fa-thumbs-up mr-1"></i> J'aime
-                        </button>
-                    </form>
-                @endif
-                
-                <button @click="$refs.commentForm.classList.toggle('hidden')" class="flex items-center text-gray-600 hover:bg-gray-100 px-3 py-1 rounded">
+                <button @click="showCommentForm = !showCommentForm" class="flex items-center text-gray-600 hover:bg-gray-100 px-3 py-1 rounded">
                     <i class="far fa-comment-alt mr-1"></i> Commenter
                 </button>
                 
-                <button class="flex items-center text-gray-600 hover:bg-gray-100 px-3 py-1 rounded">
+                <button @click="showShareForm = !showShareForm" class="flex items-center text-gray-600 hover:bg-gray-100 px-3 py-1 rounded">
                     <i class="far fa-share-square mr-1"></i> Partager
                 </button>
             </div>
             
-            <div x-ref="commentForm" class="hidden">
+            <div x-show="showShareForm" class="mb-4">
+                <form action="{{ route('posts.share', $post) }}" method="POST" class="mb-4">
+                    @csrf
+                    <div class="flex">
+                        @if (Auth::user()->profile && Auth::user()->profile->profile_picture)
+                            <img src="{{ Storage::url(Auth::user()->profile->profile_picture) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 rounded-full mr-2">
+                        @else
+                            <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                                <span class="text-gray-600 text-xs font-bold">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                            </div>
+                        @endif
+                        
+                        <div class="flex-1">
+                            <textarea name="comment" rows="2" placeholder="Ajouter un commentaire à votre partage (facultatif)..." class="w-full rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"></textarea>
+                            
+                            <div class="flex justify-end items-center mt-2">
+                                <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
+                                    Partager
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <div x-show="showCommentForm">
                 <form action="{{ route('posts.comments.store', $post) }}" method="POST" enctype="multipart/form-data" class="mb-4">
                     @csrf
                     <div class="flex">
@@ -182,27 +205,34 @@
                             <div class="flex space-x-3 text-xs text-gray-500 mt-1 ml-1">
                                 <span class="text-gray-400">{{ $comment->created_at->diffForHumans() }}</span>
                                 
-                                @php
-                                    $liked = $comment->likes()->where('user_id', Auth::id())->first();
-                                @endphp
-                                
-                                @if ($liked)
-                                    <form action="{{ route('comments.unlike', $comment) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-blue-600 hover:underline">
-                                            J'aime
-                                        </button>
-                                    </form>
-                                @else
-                                    <form action="{{ route('comments.like', $comment) }}" method="POST" class="inline">
-                                        @csrf
-                                        <input type="hidden" name="type" value="like">
-                                        <button type="submit" class="hover:underline">
-                                            J'aime
-                                        </button>
-                                    </form>
-                                @endif
+                                <div x-data="{ isCommentLiked: {{ $comment->isLikedBy(Auth::user()) ? 'true' : 'false' }} }">
+                                    <button 
+                                        @click="
+                                            isCommentLiked = !isCommentLiked;
+                                            if (isCommentLiked) {
+                                                fetch('{{ route('comments.like', $comment) }}', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                                    }
+                                                });
+                                            } else {
+                                                fetch('{{ route('comments.unlike', $comment) }}', {
+                                                    method: 'DELETE',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                                    }
+                                                });
+                                            }
+                                        " 
+                                        :class="isCommentLiked ? 'text-blue-600' : ''" 
+                                        class="hover:underline"
+                                    >
+                                        J'aime
+                                    </button>
+                                </div>
                                 
                                 <button @click="$refs.replyForm{{ $comment->id }}.classList.toggle('hidden')" class="hover:underline">
                                     Répondre
@@ -260,27 +290,34 @@
                                                 <div class="flex space-x-3 text-xs text-gray-500 mt-1 ml-1">
                                                     <span class="text-gray-400">{{ $reply->created_at->diffForHumans() }}</span>
                                                     
-                                                    @php
-                                                        $liked = $reply->likes()->where('user_id', Auth::id())->first();
-                                                    @endphp
-                                                    
-                                                    @if ($liked)
-                                                        <form action="{{ route('comments.unlike', $reply) }}" method="POST" class="inline">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="text-blue-600 hover:underline">
-                                                                J'aime
-                                                            </button>
-                                                        </form>
-                                                    @else
-                                                        <form action="{{ route('comments.like', $reply) }}" method="POST" class="inline">
-                                                            @csrf
-                                                            <input type="hidden" name="type" value="like">
-                                                            <button type="submit" class="hover:underline">
-                                                                J'aime
-                                                            </button>
-                                                        </form>
-                                                    @endif
+                                                    <div x-data="{ isReplyLiked: {{ $reply->isLikedBy(Auth::user()) ? 'true' : 'false' }} }">
+                                                        <button 
+                                                            @click="
+                                                                isReplyLiked = !isReplyLiked;
+                                                                if (isReplyLiked) {
+                                                                    fetch('{{ route('comments.like', $reply) }}', {
+                                                                        method: 'POST',
+                                                                        headers: {
+                                                                            'Content-Type': 'application/json',
+                                                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    fetch('{{ route('comments.unlike', $reply) }}', {
+                                                                        method: 'DELETE',
+                                                                        headers: {
+                                                                            'Content-Type': 'application/json',
+                                                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                                                        }
+                                                                    });
+                                                                }
+                                                            " 
+                                                            :class="isReplyLiked ? 'text-blue-600' : ''" 
+                                                            class="hover:underline"
+                                                        >
+                                                            J'aime
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

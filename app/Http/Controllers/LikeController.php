@@ -16,9 +16,8 @@ class LikeController extends Controller
      */
     public function likePost(Request $request, Post $post)
     {
-        $request->validate([
-            'type' => 'required|in:like,love,haha,wow,sad,angry',
-        ]);
+        // For AJAX requests, set default type to 'like'
+        $type = $request->input('type', 'like');
         
         // Vérifier si l'utilisateur a déjà aimé le post
         $existingLike = Like::where('user_id', Auth::id())
@@ -28,10 +27,19 @@ class LikeController extends Controller
             
         if ($existingLike) {
             // Si le type de like est différent, mettre à jour
-            if ($existingLike->type !== $request->type) {
-                $existingLike->type = $request->type;
+            if ($existingLike->type !== $type) {
+                $existingLike->type = $type;
                 $existingLike->save();
+                
+                if ($request->ajax()) {
+                    return response()->json(['success' => true, 'message' => 'Réaction mise à jour !']);
+                }
+                
                 return redirect()->back()->with('success', 'Réaction mise à jour !');
+            }
+            
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'message' => 'Vous avez déjà aimé cette publication.']);
             }
             
             return redirect()->back()->with('error', 'Vous avez déjà aimé cette publication.');
@@ -42,7 +50,7 @@ class LikeController extends Controller
         $like->user_id = Auth::id();
         $like->likeable_id = $post->id;
         $like->likeable_type = Post::class;
-        $like->type = $request->type;
+        $like->type = $type;
         $like->save();
         
         // Créer une notification pour le propriétaire du post
@@ -57,13 +65,17 @@ class LikeController extends Controller
             ]);
         }
         
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Publication aimée !']);
+        }
+        
         return redirect()->back()->with('success', 'Publication aimée !');
     }
     
     /**
      * Ne plus aimer une publication
      */
-    public function unlikePost(Post $post)
+    public function unlikePost(Request $request, Post $post)
     {
         // Supprimer le like
         $like = Like::where('user_id', Auth::id())
@@ -72,6 +84,10 @@ class LikeController extends Controller
             ->first();
             
         if (!$like) {
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'message' => "Vous n'avez pas aimé cette publication."]);
+            }
+            
             return redirect()->back()->with('error', "Vous n'avez pas aimé cette publication.");
         }
         
@@ -82,6 +98,10 @@ class LikeController extends Controller
             
         $like->delete();
         
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Vous n\'aimez plus cette publication.']);
+        }
+        
         return redirect()->back()->with('success', 'Vous n\'aimez plus cette publication.');
     }
     
@@ -90,9 +110,8 @@ class LikeController extends Controller
      */
     public function likeComment(Request $request, Comment $comment)
     {
-        $request->validate([
-            'type' => 'required|in:like,love,haha,wow,sad,angry',
-        ]);
+        // For AJAX requests, set default type to 'like'
+        $type = $request->input('type', 'like');
         
         // Vérifier si l'utilisateur a déjà aimé le commentaire
         $existingLike = Like::where('user_id', Auth::id())
@@ -102,10 +121,19 @@ class LikeController extends Controller
             
         if ($existingLike) {
             // Si le type de like est différent, mettre à jour
-            if ($existingLike->type !== $request->type) {
-                $existingLike->type = $request->type;
+            if ($existingLike->type !== $type) {
+                $existingLike->type = $type;
                 $existingLike->save();
+                
+                if ($request->ajax()) {
+                    return response()->json(['success' => true, 'message' => 'Réaction mise à jour !']);
+                }
+                
                 return redirect()->back()->with('success', 'Réaction mise à jour !');
+            }
+            
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'message' => 'Vous avez déjà aimé ce commentaire.']);
             }
             
             return redirect()->back()->with('error', 'Vous avez déjà aimé ce commentaire.');
@@ -116,7 +144,7 @@ class LikeController extends Controller
         $like->user_id = Auth::id();
         $like->likeable_id = $comment->id;
         $like->likeable_type = Comment::class;
-        $like->type = $request->type;
+        $like->type = $type;
         $like->save();
         
         // Créer une notification pour le propriétaire du commentaire
@@ -131,13 +159,17 @@ class LikeController extends Controller
             ]);
         }
         
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Commentaire aimé !']);
+        }
+        
         return redirect()->back()->with('success', 'Commentaire aimé !');
     }
     
     /**
      * Ne plus aimer un commentaire
      */
-    public function unlikeComment(Comment $comment)
+    public function unlikeComment(Request $request, Comment $comment)
     {
         // Supprimer le like
         $like = Like::where('user_id', Auth::id())
@@ -146,6 +178,10 @@ class LikeController extends Controller
             ->first();
             
         if (!$like) {
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'message' => "Vous n'avez pas aimé ce commentaire."]);
+            }
+            
             return redirect()->back()->with('error', "Vous n'avez pas aimé ce commentaire.");
         }
         
@@ -155,6 +191,10 @@ class LikeController extends Controller
             ->delete();
             
         $like->delete();
+        
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Vous n\'aimez plus ce commentaire.']);
+        }
         
         return redirect()->back()->with('success', 'Vous n\'aimez plus ce commentaire.');
     }

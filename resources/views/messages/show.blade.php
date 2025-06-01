@@ -77,12 +77,6 @@
                             </div>
                             
                             <div class="flex items-center space-x-3">
-                                <button class="p-3 text-text-secondary dark:text-text-secondary-dark hover:text-facebook-500 hover:bg-background-hover dark:hover:bg-background-hover-dark rounded-xl transition-all duration-300">
-                                    <i class="fas fa-phone"></i>
-                                </button>
-                                <button class="p-3 text-text-secondary dark:text-text-secondary-dark hover:text-facebook-500 hover:bg-background-hover dark:hover:bg-background-hover-dark rounded-xl transition-all duration-300">
-                                    <i class="fas fa-video"></i>
-                                </button>
                                 <a href="{{ route('profile.show', $user) }}" class="btn-facebook">
                                     <i class="fas fa-user mr-2"></i>
                                     Voir le profil

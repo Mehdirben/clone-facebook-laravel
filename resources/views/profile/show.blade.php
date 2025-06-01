@@ -32,6 +32,70 @@
                                 </div>
                             @endif
                         </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap gap-3 mt-6 sm:mt-0">
+                            @if(Auth::id() === $user->id)
+                                <a href="{{ route('profile.edit') }}" class="btn-facebook">
+                                    <i class="fas fa-edit mr-2"></i>
+                                    Modifier mon profil
+                                </a>
+                            @else
+                                <a href="{{ route('messages.show', $user) }}" class="btn-secondary">
+                                    <i class="fas fa-comment mr-2"></i>
+                                    Message
+                                </a>
+                                
+                                @if(!$friendship)
+                                    <form action="{{ route('friends.request', $user) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="btn-facebook">
+                                            <i class="fas fa-user-plus mr-2"></i>
+                                            Ajouter ami
+                                        </button>
+                                    </form>
+                                @elseif($friendship->status === 'pending')
+                                    @if($friendship->user_id === Auth::id())
+                                        <form action="{{ route('friends.remove', $friendship) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300">
+                                                <i class="fas fa-clock mr-2"></i>
+                                                Demande envoyée
+                                            </button>
+                                        </form>
+                                    @else
+                                        <div class="flex gap-2">
+                                            <form action="{{ route('friends.accept', $friendship) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300">
+                                                    <i class="fas fa-check mr-2"></i>
+                                                    Accepter
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('friends.reject', $friendship) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 transition-all duration-300">
+                                                    <i class="fas fa-times mr-2"></i>
+                                                    Refuser
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                @elseif($friendship->status === 'accepted')
+                                    <form action="{{ route('friends.remove', $friendship) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="px-4 py-2 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 font-semibold rounded-xl hover:bg-green-200 dark:hover:bg-green-900/30 transition-all duration-300">
+                                            <i class="fas fa-user-check mr-2"></i>
+                                            Amis
+                                        </button>
+                                    </form>
+                                @endif
+                            @endif
+                        </div>
                     </div>
 
                     <!-- User Info -->
@@ -51,10 +115,6 @@
                             <div class="flex items-center">
                                 <i class="fas fa-map-marker-alt mr-2 text-pink-500"></i>
                                 <span>{{ $user->profile && $user->profile->location ? $user->profile->location : 'Emplacement non spécifié' }}</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-users mr-2 text-green-500"></i>
-                                <span>{{ $posts->total() }} {{ $posts->total() > 1 ? 'publications' : 'publication' }}</span>
                             </div>
                         </div>
                     </div>
@@ -420,70 +480,6 @@
                                     {{ Auth::id() === $user->id ? 'Vous n\'avez pas encore partagé de publications.' : $user->name . ' n\'a pas encore partagé de publications.' }}
                                 </p>
                             </div>
-                        @endif
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="flex flex-wrap gap-3 mt-6 sm:mt-0">
-                        @if(Auth::id() === $user->id)
-                            <a href="{{ route('profile.edit') }}" class="btn-facebook">
-                                <i class="fas fa-edit mr-2"></i>
-                                Modifier mon profil
-                            </a>
-                        @else
-                            <a href="{{ route('messages.show', $user) }}" class="btn-secondary">
-                                <i class="fas fa-comment mr-2"></i>
-                                Message
-                            </a>
-                            
-                            @if(!$friendship)
-                                <form action="{{ route('friends.request', $user) }}" method="POST" class="inline">
-                                    @csrf
-                                    <button type="submit" class="btn-facebook">
-                                        <i class="fas fa-user-plus mr-2"></i>
-                                        Ajouter ami
-                                    </button>
-                                </form>
-                            @elseif($friendship->status === 'pending')
-                                @if($friendship->user_id === Auth::id())
-                                    <form action="{{ route('friends.remove', $friendship) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300">
-                                            <i class="fas fa-clock mr-2"></i>
-                                            Demande envoyée
-                                        </button>
-                                    </form>
-                                @else
-                                    <div class="flex gap-2">
-                                        <form action="{{ route('friends.accept', $friendship) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit" class="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300">
-                                                <i class="fas fa-check mr-2"></i>
-                                                Accepter
-                                            </button>
-                                        </form>
-                                        <form action="{{ route('friends.reject', $friendship) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 transition-all duration-300">
-                                                <i class="fas fa-times mr-2"></i>
-                                                Refuser
-                                            </button>
-                                        </form>
-                                    </div>
-                                @endif
-                            @elseif($friendship->status === 'accepted')
-                                <form action="{{ route('friends.remove', $friendship) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="px-4 py-2 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 font-semibold rounded-xl hover:bg-green-200 dark:hover:bg-green-900/30 transition-all duration-300">
-                                        <i class="fas fa-user-check mr-2"></i>
-                                        Amis
-                                    </button>
-                                </form>
-                            @endif
                         @endif
                     </div>
                 </div>

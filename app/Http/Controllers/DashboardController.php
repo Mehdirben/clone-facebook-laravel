@@ -8,6 +8,8 @@ use App\Models\Share;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class DashboardController extends Controller
 {
@@ -65,13 +67,49 @@ class DashboardController extends Controller
             ['path' => request()->url(), 'query' => request()->query()]
         );
         
+        // Récupérer les amis en ligne (simulé - vous pourrez implémenter un système de présence plus tard)
+        $onlineFriends = User::whereIn('id', $friendIds)
+            ->where('id', '!=', $user->id)
+            ->take(5)
+            ->get();
+        
         // Suggérer des amis à l'utilisateur
-        $suggestedFriends = User::whereNotIn('id', $friendIds)
+        $friendSuggestions = User::whereNotIn('id', $friendIds)
             ->where('id', '!=', $user->id)
             ->inRandomOrder()
             ->limit(5)
-            ->get();
+            ->get()
+            ->map(function($suggestedUser) {
+                // Pour l'instant, on assigne un nombre aléatoire d'amis en commun
+                $suggestedUser->mutual_friends_count = rand(0, 5);
+                return $suggestedUser;
+            });
+        
+        // Obtenir les notifications récentes (utiliser le modèle Notification personnalisé)
+        $recentActivity = collect();
+        try {
+            $recentActivity = \App\Models\Notification::where('user_id', $user->id)
+                ->with('fromUser')
+                ->latest()
+                ->limit(5)
+                ->get()
+                ->map(function($notification) {
+                    return (object) [
+                        'message' => $notification->content ?? 'Nouvelle notification',
+                        'created_at' => $notification->created_at,
+                        'icon' => 'bell',
+                        'color' => 'blue'
+                    ];
+                });
+        } catch (Exception $e) {
+            $recentActivity = collect();
+        }
             
-        return view('dashboard', ['posts' => $paginatedPosts, 'suggestedFriends' => $suggestedFriends]);
+        return view('dashboard', [
+            'posts' => $paginatedPosts,
+            'onlineFriends' => $onlineFriends,
+            'friendSuggestions' => $friendSuggestions,
+            'recentActivity' => $recentActivity
+        ]);
     }
 }

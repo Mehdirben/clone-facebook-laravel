@@ -130,48 +130,6 @@
                             </div>
                         @endif
                     </div>
-
-                    <!-- Quick Actions -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="card p-6 hover:shadow-lg transition-all duration-300 border border-transparent hover:border-purple-200 dark:hover:border-purple-700">
-                            <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center mb-4">
-                                <i class="fas fa-users text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-lg font-semibold text-text-primary dark:text-text-primary-dark mb-2">Conversations de groupe</h3>
-                            <p class="text-text-secondary dark:text-text-secondary-dark text-sm mb-4">
-                                Créez des conversations avec plusieurs amis en même temps
-                            </p>
-                            <button class="text-purple-500 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-sm transition-colors">
-                                Bientôt disponible →
-                            </button>
-                        </div>
-
-                        <div class="card p-6 hover:shadow-lg transition-all duration-300 border border-transparent hover:border-blue-200 dark:hover:border-blue-700">
-                            <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center mb-4">
-                                <i class="fas fa-video text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-lg font-semibold text-text-primary dark:text-text-primary-dark mb-2">Appels vidéo</h3>
-                            <p class="text-text-secondary dark:text-text-secondary-dark text-sm mb-4">
-                                Passez des appels vidéo avec vos amis directement depuis les messages
-                            </p>
-                            <button class="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 font-medium text-sm transition-colors">
-                                Bientôt disponible →
-                            </button>
-                        </div>
-
-                        <div class="card p-6 hover:shadow-lg transition-all duration-300 border border-transparent hover:border-green-200 dark:hover:border-green-700">
-                            <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center mb-4">
-                                <i class="fas fa-share text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-lg font-semibold text-text-primary dark:text-text-primary-dark mb-2">Partage de fichiers</h3>
-                            <p class="text-text-secondary dark:text-text-secondary-dark text-sm mb-4">
-                                Partagez des photos, vidéos et documents facilement
-                            </p>
-                            <button class="text-green-500 hover:text-green-600 dark:hover:text-green-400 font-medium text-sm transition-colors">
-                                Bientôt disponible →
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

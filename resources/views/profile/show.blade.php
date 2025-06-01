@@ -140,6 +140,47 @@
                 </div>
             </div>
 
+            <!-- Statistics Section -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="card p-6 text-center hover:shadow-lg transition-all duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-file-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-text-primary dark:text-text-primary-dark mb-2">{{ $posts->total() }}</h3>
+                    <p class="text-text-secondary dark:text-text-secondary-dark text-sm">Publications totales</p>
+                </div>
+
+                <div class="card p-6 text-center hover:shadow-lg transition-all duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-heart text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-text-primary dark:text-text-primary-dark mb-2">
+                        {{ $posts->sum(function($post) { return $post->likes->count(); }) }}
+                    </h3>
+                    <p class="text-text-secondary dark:text-text-secondary-dark text-sm">Likes reçus</p>
+                </div>
+
+                <div class="card p-6 text-center hover:shadow-lg transition-all duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-comment text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-text-primary dark:text-text-primary-dark mb-2">
+                        {{ $posts->sum(function($post) { return $post->comments->count(); }) }}
+                    </h3>
+                    <p class="text-text-secondary dark:text-text-secondary-dark text-sm">Commentaires</p>
+                </div>
+
+                <div class="card p-6 text-center hover:shadow-lg transition-all duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-share text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-text-primary dark:text-text-primary-dark mb-2">
+                        {{ $posts->sum(function($post) { return $post->shares->count(); }) }}
+                    </h3>
+                    <p class="text-text-secondary dark:text-text-secondary-dark text-sm">Partages</p>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Sidebar Info -->
                 <div class="lg:col-span-1 space-y-6">

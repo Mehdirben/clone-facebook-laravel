@@ -125,38 +125,6 @@
                         </a>
                     </nav>
                 </div>
-
-                <!-- Amis en ligne -->
-                @if(isset($onlineFriends) && $onlineFriends && $onlineFriends->count() > 0)
-                    <div class="sidebar-section animate-fade-in">
-                        <h3 class="font-bold text-text-primary dark:text-text-primary-dark mb-4 flex items-center">
-                            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mr-3 animate-pulse">
-                                <i class="fas fa-users text-white text-sm"></i>
-                            </div>
-                            Amis en ligne ({{ $onlineFriends->count() }})
-                        </h3>
-                        <div class="space-y-3">
-                            @foreach($onlineFriends->take(5) as $friend)
-                                <div class="flex items-center space-x-3 p-2 rounded-xl hover:bg-background-hover dark:hover:bg-background-hover-dark cursor-pointer transition-all duration-200 group">
-                                    <div class="relative">
-                                        @if($friend->profile && $friend->profile->profile_picture)
-                                            <img src="{{ Storage::url($friend->profile->profile_picture) }}" alt="{{ $friend->name }}" class="w-10 h-10 rounded-xl object-cover">
-                                        @else
-                                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center">
-                                                <span class="text-white text-sm font-bold">{{ substr($friend->name, 0, 1) }}</span>
-                                            </div>
-                                        @endif
-                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-background-card-dark"></div>
-                                    </div>
-                                    <div class="flex-1">
-                                        <span class="text-text-primary dark:text-text-primary-dark text-sm font-medium group-hover:text-facebook-500 transition-colors">{{ $friend->name }}</span>
-                                        <p class="text-text-muted dark:text-text-muted-dark text-xs">En ligne</p>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
             </div>
 
             <!-- Contenu principal -->

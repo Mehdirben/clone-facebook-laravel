@@ -130,9 +130,6 @@
                                     </div>
                                 @endif
                                 
-                                <!-- Online status indicator -->
-                                <div class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white dark:border-background-card-dark animate-pulse shadow-sm"></div>
-                                
                                 <!-- Shine effect -->
                                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></div>
                             </div>
@@ -143,9 +140,6 @@
                                     <div>
                                         <div class="text-sm font-semibold text-text-primary dark:text-text-primary-dark group-hover:text-facebook-500 transition-colors">
                                             {{ Auth::user()->name }}
-                                        </div>
-                                        <div class="text-xs text-text-muted dark:text-text-muted-dark">
-                                            En ligne
                                         </div>
                                     </div>
                                     <i class="fas fa-chevron-down text-text-secondary dark:text-text-secondary-dark text-xs group-hover:rotate-180 group-hover:text-facebook-500 transition-all duration-300"></i>
@@ -176,10 +170,6 @@
                                 <div class="flex-1">
                                     <div class="font-bold text-text-primary dark:text-text-primary-dark text-lg">{{ Auth::user()->name }}</div>
                                     <div class="text-sm text-text-secondary dark:text-text-secondary-dark">{{ Auth::user()->email }}</div>
-                                    <div class="flex items-center mt-1 text-xs text-green-500">
-                                        <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                                        En ligne
-                                    </div>
                                 </div>
                             </div>
                         </div>

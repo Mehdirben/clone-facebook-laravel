@@ -67,12 +67,6 @@ class DashboardController extends Controller
             ['path' => request()->url(), 'query' => request()->query()]
         );
         
-        // Récupérer les amis en ligne (simulé - vous pourrez implémenter un système de présence plus tard)
-        $onlineFriends = User::whereIn('id', $friendIds)
-            ->where('id', '!=', $user->id)
-            ->take(5)
-            ->get();
-        
         // Suggérer des amis à l'utilisateur
         $friendSuggestions = User::whereNotIn('id', $friendIds)
             ->where('id', '!=', $user->id)
@@ -107,7 +101,6 @@ class DashboardController extends Controller
             
         return view('dashboard', [
             'posts' => $paginatedPosts,
-            'onlineFriends' => $onlineFriends,
             'friendSuggestions' => $friendSuggestions,
             'recentActivity' => $recentActivity
         ]);

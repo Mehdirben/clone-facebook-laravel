@@ -42,7 +42,7 @@
                                 <div class="w-10 h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
                                     <i class="fas fa-bell text-white"></i>
                                 </div>
-                                <span class="font-medium">Notifications</span>
+                                Notifications
                             </a>
                             <div class="flex items-center text-facebook-500 bg-facebook-50 dark:bg-facebook-900/20 p-3 rounded-xl">
                                 <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center mr-4">
@@ -63,10 +63,6 @@
                                 <h1 class="text-3xl font-bold text-text-primary dark:text-text-primary-dark mb-2">Créer une Publication</h1>
                                 <p class="text-text-secondary dark:text-text-secondary-dark">Partagez vos pensées, photos et moments avec vos amis</p>
                             </div>
-                            <a href="{{ route('posts.index') }}" class="mt-4 sm:mt-0 btn-secondary">
-                                <i class="fas fa-arrow-left mr-2"></i>
-                                Mes publications
-                            </a>
                         </div>
                     </div>
 
@@ -206,7 +202,7 @@
 
                             <!-- Action Buttons -->
                             <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-100 dark:border-border-dark">
-                                <a href="{{ route('posts.index') }}" class="flex-1 px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 text-center">
+                                <a href="{{ route('dashboard') }}" class="flex-1 px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 text-center">
                                     <i class="fas fa-times mr-2"></i>
                                     Annuler
                                 </a>

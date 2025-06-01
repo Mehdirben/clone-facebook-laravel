@@ -44,12 +44,6 @@
                                 </div>
                                 <span class="font-medium">Notifications</span>
                             </a>
-                            <div class="flex items-center text-facebook-500 bg-facebook-50 dark:bg-facebook-900/20 p-3 rounded-xl">
-                                <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center mr-4">
-                                    <i class="fas fa-file-alt text-white"></i>
-                                </div>
-                                <span class="font-semibold">Mes publications</span>
-                            </div>
                         </nav>
                     </div>
                 </div>

@@ -84,40 +84,11 @@
                             <div class="absolute inset-0 bg-gradient-to-r from-purple-50/0 to-purple-50/20 dark:from-purple-900/0 dark:to-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
                         </a>
                         
-                        <a href="{{ route('notifications.index') }}" class="nav-item group relative overflow-hidden">
-                            <div class="w-10 h-10 bg-gradient-to-br from-red-500 via-rose-500 to-pink-600 rounded-2xl mr-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg group-hover:shadow-red-glow relative flex items-center justify-center">
-                                <i class="fas fa-bell text-white text-sm group-hover:animate-swing"></i>
-                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></div>
+                        <a href="{{ route('notifications.index') }}" class="flex items-center text-text-secondary dark:text-text-secondary-dark hover:text-facebook-500 hover:bg-background-hover dark:hover:bg-background-hover-dark p-3 rounded-xl transition-all duration-300 group">
+                            <div class="w-10 h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-bell text-white"></i>
                             </div>
                             <span class="group-hover:text-red-500 transition-colors font-medium">Notifications</span>
-                            @php
-                                $unreadCount = 0;
-                                try {
-                                    if (Auth::user() && method_exists(Auth::user(), 'notifications')) {
-                                        $unreadCount = Auth::user()->notifications()->whereNull('read_at')->count();
-                                    }
-                                } catch (Exception $e) {
-                                    $unreadCount = 0;
-                                }
-                            @endphp
-                            @if($unreadCount > 0)
-                                <span class="ml-auto text-xs bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-2.5 py-1.5 rounded-full font-semibold shadow-sm animate-pulse group-hover:scale-110 transition-transform">
-                                    {{ $unreadCount > 99 ? '99+' : $unreadCount }}
-                                </span>
-                            @endif
-                            <div class="absolute inset-0 bg-gradient-to-r from-red-50/0 to-red-50/20 dark:from-red-900/0 dark:to-red-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
-                        </a>
-                        
-                        <a href="{{ route('posts.index') }}" class="nav-item group relative overflow-hidden">
-                            <div class="w-10 h-10 bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-600 rounded-2xl mr-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg group-hover:shadow-orange-glow relative flex items-center justify-center">
-                                <i class="fas fa-bookmark text-white text-sm group-hover:animate-float"></i>
-                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></div>
-                            </div>
-                            <span class="group-hover:text-orange-500 transition-colors font-medium">Mes publications</span>
-                            <span class="ml-auto text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 px-2.5 py-1.5 rounded-full font-semibold shadow-sm group-hover:scale-110 transition-transform">
-                                {{ Auth::user()->posts()->count() ?? 0 }}
-                            </span>
-                            <div class="absolute inset-0 bg-gradient-to-r from-orange-50/0 to-orange-50/20 dark:from-orange-900/0 dark:to-orange-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
                         </a>
                     </nav>
                 </div>

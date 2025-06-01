@@ -94,19 +94,6 @@
                         Notifications
                     </div>
                 </a>
-                
-                <a href="{{ route('posts.index') }}" 
-                   class="nav-item group relative {{ request()->routeIs('posts.*') ? 'active' : '' }}">
-                    <div class="relative">
-                        <i class="fas fa-bookmark text-xl group-hover:scale-125 transition-all duration-300"></i>
-                        @if(request()->routeIs('posts.*'))
-                            <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-facebook-500 rounded-full animate-pulse"></div>
-                        @endif
-                    </div>
-                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50">
-                        Publications
-                    </div>
-                </a>
             </div>
 
             <!-- Right Side Icons -->

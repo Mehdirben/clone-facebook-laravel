@@ -44,12 +44,6 @@
                                 </div>
                                 <span class="font-medium">Notifications</span>
                             </a>
-                            <a href="{{ route('posts.index') }}" class="flex items-center text-text-secondary dark:text-text-secondary-dark hover:text-facebook-500 hover:bg-background-hover dark:hover:bg-background-hover-dark p-3 rounded-xl transition-all duration-300 group">
-                                <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
-                                    <i class="fas fa-file-alt text-white"></i>
-                                </div>
-                                <span class="font-medium">Mes publications</span>
-                            </a>
                         </nav>
                     </div>
                 </div>

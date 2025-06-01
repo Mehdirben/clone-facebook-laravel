@@ -24,7 +24,7 @@
             <div class="lg:col-span-3 space-y-6">
                 <!-- Profil utilisateur -->
                 <div class="sidebar-section animate-fade-in group hover:shadow-lg transition-all duration-300">
-                    <div class="flex items-center space-x-4 mb-4">
+                    <div class="flex items-center space-x-4">
                         @if (Auth::user()->profile && Auth::user()->profile->profile_picture)
                             <img src="{{ Storage::url(Auth::user()->profile->profile_picture) }}" alt="{{ Auth::user()->name }}" class="avatar avatar-lg ring-4 ring-facebook-100 dark:ring-facebook-900/20">
                         @else
@@ -35,10 +35,6 @@
                         <div>
                             <a href="{{ route('profile.show', Auth::user()) }}" class="text-lg font-bold text-text-primary dark:text-text-primary-dark hover:text-facebook-500 transition-colors">{{ Auth::user()->name }}</a>
                             <p class="text-text-secondary dark:text-text-secondary-dark text-sm">Voir votre profil</p>
-                            <div class="flex items-center mt-1 text-xs text-green-500">
-                                <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                                En ligne
-                            </div>
                         </div>
                     </div>
                 </div>

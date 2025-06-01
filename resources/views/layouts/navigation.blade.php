@@ -192,8 +192,8 @@
                                     <i class="fas fa-user text-white text-sm"></i>
                                 </div>
                                 <div class="flex-1">
-                                    <div class="font-medium group-hover:text-facebook-500 transition-colors">{{ __('Mon profil') }}</div>
-                                    <div class="text-xs text-text-muted dark:text-text-muted-dark">Voir et modifier votre profil</div>
+                                    <div class="font-medium group-hover:text-facebook-500 transition-colors">{{ __('Voir votre profil') }}</div>
+                                    <div class="text-xs text-text-muted dark:text-text-muted-dark">Gérer votre profil public</div>
                                 </div>
                                 <i class="fas fa-chevron-right text-text-muted dark:text-text-muted-dark text-xs group-hover:text-facebook-500 group-hover:translate-x-1 transition-all"></i>
                             </a>

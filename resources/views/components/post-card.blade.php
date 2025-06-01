@@ -107,7 +107,7 @@
     @endif
     
     <!-- Actions d'interaction -->
-    <div class="grid grid-cols-3 gap-2 {{ $hasEngagement ? 'mb-4' : 'mb-4 pt-3 border-t border-gray-100 dark:border-border-dark' }}">
+    <div class="grid grid-cols-3 gap-2 {{ $hasEngagement ? '' : 'pt-3 border-t border-gray-100 dark:border-border-dark' }}">
         <button 
             @click="
                 isLiked = !isLiked;
@@ -154,7 +154,7 @@
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0 transform scale-95"
          x-transition:enter-end="opacity-1 transform scale-100"
-         class="mb-4 p-4 bg-background-hover dark:bg-background-hover-dark rounded-xl">
+         class="mt-4 p-4 bg-background-hover dark:bg-background-hover-dark rounded-xl">
         
         <form action="{{ route('posts.share', $post) }}" method="POST">
             @csrf
@@ -187,7 +187,7 @@
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0 transform scale-95"
          x-transition:enter-end="opacity-1 transform scale-100"
-         class="mb-4">
+         class="mt-4">
         
         <form action="{{ route('posts.comments.store', $post) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -232,7 +232,7 @@
     
     <!-- Liste des commentaires -->
     @if($post->comments()->count() > 0)
-        <div class="space-y-4">
+        <div class="mt-4 space-y-4">
             @foreach ($post->comments()->with('user', 'likes')->latest()->limit(3)->get() as $comment)
                 <div class="flex items-start space-x-3" x-data="{ showCommentOptions: false }">
                     @if ($comment->user->profile && $comment->user->profile->profile_picture)

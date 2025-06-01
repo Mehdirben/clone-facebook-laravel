@@ -157,47 +157,55 @@
 
                         <!-- Message Input -->
                         <div class="p-6 border-t border-gray-100 dark:border-border-dark">
-                            <form action="{{ route('messages.send', $user) }}" method="POST" enctype="multipart/form-data" x-data="{ hasContent: false, selectedFile: null }" class="flex items-end space-x-4">
+                            <form action="{{ route('messages.send', $user) }}" method="POST" enctype="multipart/form-data" x-data="{ hasContent: false, selectedFile: null }" class="flex items-center space-x-3">
                                 @csrf
                                 
                                 <!-- Attachment Button -->
-                                <div class="relative">
-                                    <label for="attachment" class="cursor-pointer p-3 text-text-secondary dark:text-text-secondary-dark hover:text-facebook-500 hover:bg-background-hover dark:hover:bg-background-hover-dark rounded-xl transition-all duration-300">
-                                        <i class="fas fa-paperclip text-lg"></i>
+                                <div class="flex-shrink-0">
+                                    <label for="attachment" class="cursor-pointer w-14 h-14 bg-background-hover dark:bg-background-hover-dark hover:bg-facebook-50 dark:hover:bg-facebook-900/20 rounded-2xl flex items-center justify-center text-text-secondary dark:text-text-secondary-dark hover:text-facebook-500 transition-all duration-300 group shadow-sm hover:shadow-md border border-transparent hover:border-facebook-200 dark:hover:border-facebook-700">
+                                        <i class="fas fa-paperclip text-xl group-hover:scale-110 transition-transform"></i>
                                     </label>
                                     <input type="file" name="attachment" id="attachment" class="hidden" @change="selectedFile = $event.target.files[0]">
                                 </div>
 
-                                <!-- Message Input -->
+                                <!-- Message Input Container -->
                                 <div class="flex-1 relative">
                                     <textarea name="content" rows="1" 
-                                              class="w-full border-0 bg-background-hover dark:bg-background-hover-dark rounded-2xl px-6 py-4 focus:ring-2 focus:ring-facebook-500 resize-none text-text-primary dark:text-text-primary-dark placeholder-text-muted dark:placeholder-text-muted-dark transition-all duration-300 max-h-32"
+                                              class="w-full border-0 bg-background-hover dark:bg-background-hover-dark rounded-2xl px-5 py-3.5 focus:ring-2 focus:ring-facebook-500 resize-none text-text-primary dark:text-text-primary-dark placeholder-text-muted dark:placeholder-text-muted-dark transition-all duration-300 max-h-32 shadow-sm focus:shadow-md"
                                               placeholder="Écrivez votre message..."
                                               @input="hasContent = $event.target.value.trim().length > 0"
                                               @keydown.enter.prevent="if (!$event.shiftKey && (hasContent || selectedFile)) { $event.target.form.submit(); }"
-                                              style="scrollbar-width: none; -ms-overflow-style: none;"></textarea>
+                                              style="scrollbar-width: none; -ms-overflow-style: none; min-height: 48px; line-height: 1.4;"></textarea>
                                     
                                     <!-- File Preview -->
-                                    <div x-show="selectedFile" class="absolute bottom-full left-0 right-0 mb-2 p-3 bg-background-hover dark:bg-background-hover-dark rounded-xl border border-gray-200 dark:border-border-dark">
+                                    <div x-show="selectedFile" x-cloak class="absolute bottom-full left-0 right-0 mb-3 p-4 bg-white dark:bg-background-card-dark rounded-2xl border border-gray-200 dark:border-border-dark shadow-lg">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center space-x-3">
-                                                <i class="fas fa-file text-facebook-500"></i>
-                                                <span class="text-text-primary dark:text-text-primary-dark text-sm" x-text="selectedFile?.name"></span>
+                                                <div class="w-8 h-8 bg-facebook-500 rounded-lg flex items-center justify-center">
+                                                    <i class="fas fa-file text-white text-sm"></i>
+                                                </div>
+                                                <span class="text-text-primary dark:text-text-primary-dark text-sm font-medium" x-text="selectedFile?.name"></span>
                                             </div>
-                                            <button type="button" @click="selectedFile = null; document.getElementById('attachment').value = ''" class="text-red-500 hover:text-red-600">
-                                                <i class="fas fa-times"></i>
+                                            <button type="button" @click="selectedFile = null; document.getElementById('attachment').value = ''" class="w-8 h-8 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg flex items-center justify-center transition-all duration-300">
+                                                <i class="fas fa-times text-sm"></i>
                                             </button>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Send Button -->
-                                <button type="submit" 
-                                        class="p-3 bg-gradient-to-r from-facebook-500 to-facebook-600 text-white rounded-xl hover:from-facebook-600 hover:to-facebook-700 transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                                        :disabled="!hasContent && !selectedFile"
-                                        :class="{ 'opacity-50 cursor-not-allowed': !hasContent && !selectedFile }">
-                                    <i class="fas fa-paper-plane text-lg"></i>
-                                </button>
+                                <div class="flex-shrink-0">
+                                    <button type="submit" 
+                                            class="w-14 h-14 bg-gradient-to-r from-facebook-500 to-facebook-600 text-white rounded-2xl hover:from-facebook-600 hover:to-facebook-700 transition-all duration-300 shadow-md hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-md flex items-center justify-center group transform hover:scale-105"
+                                            :disabled="!hasContent && !selectedFile"
+                                            :class="{ 
+                                                'opacity-50 cursor-not-allowed': !hasContent && !selectedFile,
+                                                'bg-gradient-to-r from-facebook-500 to-facebook-600 hover:from-facebook-600 hover:to-facebook-700': hasContent || selectedFile,
+                                                'bg-gray-300 dark:bg-gray-600': !hasContent && !selectedFile
+                                            }">
+                                        <i class="fas fa-paper-plane text-xl group-hover:translate-x-0.5 transition-transform" :class="{ 'animate-pulse': hasContent || selectedFile }"></i>
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>

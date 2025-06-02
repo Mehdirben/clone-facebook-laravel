@@ -21,6 +21,38 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
+        <!-- Targeted dark mode fixes for navigation only -->
+        <style>
+            /* Specific navigation dark mode fixes */
+            .dark nav.bg-white {
+                background-color: #242526 !important;
+            }
+            
+            .dark nav .dropdown-menu {
+                background-color: #242526 !important;
+                border-color: #3e4042 !important;
+            }
+            
+            .dark nav .dropdown-item {
+                color: #e4e6ea !important;
+            }
+            
+            .dark nav .dropdown-item:hover {
+                background-color: rgba(24, 119, 242, 0.1) !important;
+                color: #e4e6ea !important;
+            }
+            
+            /* Fix search input in navigation */
+            .dark nav input[type="text"] {
+                background-color: #3a3b3c !important;
+                color: #e4e6ea !important;
+            }
+            
+            .dark nav input::placeholder {
+                color: #b0b3b8 !important;
+            }
+        </style>
+        
         <!-- Dark Mode Script -->
         <script>
             // Check for saved theme or default to light mode

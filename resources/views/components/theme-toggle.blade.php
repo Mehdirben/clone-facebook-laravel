@@ -15,7 +15,7 @@
      class="relative">
     
     <button @click="darkMode = !darkMode" 
-            class="p-2 bg-background-hover hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-full transition-all duration-300 group">
+            class="p-2 bg-background-hover dark:bg-background-hover-dark hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full transition-all duration-300 group">
         
         <!-- Sun Icon (Light Mode) -->
         <div x-show="!darkMode" 
@@ -46,7 +46,7 @@
         </div>
     </button>
     
-    <!-- Tooltip -->
+    <!-- Simple Tooltip -->
     <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
         <span x-text="darkMode ? 'Mode clair' : 'Mode sombre'"></span>
         <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>

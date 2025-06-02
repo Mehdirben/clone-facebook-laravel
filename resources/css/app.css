@@ -736,9 +736,3 @@ select:focus-visible {
     visibility: visible;
     opacity: 1;
 }
-
-/* Enhanced active states */
-.nav-item.active {
-    background: linear-gradient(135deg, rgba(24, 119, 242, 0.1), rgba(24, 119, 242, 0.05));
-    border-radius: 12px;
-}

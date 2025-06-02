@@ -28,18 +28,25 @@
                 background-color: #242526 !important;
             }
             
-            .dark nav .dropdown-menu {
+            /* Direct dropdown menu targeting - like navbar approach */
+            .dark .bg-white.dark\:bg-background-card-dark {
                 background-color: #242526 !important;
+            }
+            
+            .dark .border-gray-100.dark\:border-border-dark {
                 border-color: #3e4042 !important;
             }
             
-            .dark nav .dropdown-item {
+            .dark .text-text-primary.dark\:text-text-primary-dark {
                 color: #e4e6ea !important;
             }
             
-            .dark nav .dropdown-item:hover {
-                background-color: rgba(24, 119, 242, 0.1) !important;
-                color: #e4e6ea !important;
+            .dark .text-text-secondary.dark\:text-text-secondary-dark {
+                color: #b0b3b8 !important;
+            }
+            
+            .dark .text-text-muted.dark\:text-text-muted-dark {
+                color: #8a8d91 !important;
             }
             
             /* Fix search input in navigation */

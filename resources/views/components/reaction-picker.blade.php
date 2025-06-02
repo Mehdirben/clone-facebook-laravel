@@ -43,7 +43,7 @@
         x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-1 transform scale-100"
         x-transition:leave-end="opacity-0 transform scale-90"
-        class="absolute bottom-full left-0 mb-2 bg-white rounded-full shadow-facebook-hover border border-gray-100 p-2 flex space-x-1 z-20"
+        class="absolute bottom-full left-0 mb-2 bg-white dark:bg-background-card-dark rounded-full shadow-facebook-hover dark:shadow-facebook-dark border border-gray-100 dark:border-border-dark p-2 flex space-x-1 z-20"
     >
         <!-- Like -->
         <button @click="react('like')" class="reaction-btn group" title="J'aime">

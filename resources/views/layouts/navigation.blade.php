@@ -35,7 +35,7 @@
                             <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-facebook-500 rounded-full animate-pulse"></div>
                         @endif
                     </div>
-                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50">
+                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-800 dark:bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50">
                         Accueil
                     </div>
                 </a>
@@ -48,7 +48,7 @@
                             <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-facebook-500 rounded-full animate-pulse"></div>
                         @endif
                     </div>
-                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50">
+                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-800 dark:bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50">
                         Amis
                     </div>
                 </a>
@@ -61,7 +61,7 @@
                             <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-facebook-500 rounded-full animate-pulse"></div>
                         @endif
                     </div>
-                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50">
+                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-800 dark:bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50">
                         Messenger
                     </div>
                 </a>
@@ -90,7 +90,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50">
+                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-800 dark:bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50">
                         Notifications
                     </div>
                 </a>
@@ -256,7 +256,7 @@
 
             <!-- Mobile menu button -->
             <div class="flex items-center sm:hidden">
-                <button @click="open = ! open" class="p-2 rounded-md text-text-secondary dark:text-text-secondary-dark hover:text-text-primary dark:hover:text-text-primary-dark hover:bg-background-hover dark:hover:bg-background-hover-dark">
+                <button @click="open = ! open" class="p-2 rounded-md text-text-secondary dark:text-text-secondary-dark hover:text-text-primary dark:hover:text-text-primary-dark hover:bg-background-hover dark:hover:bg-background-hover-dark transition-all duration-200">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -305,7 +305,7 @@
                         }
                     @endphp
                     @if($unreadCount > 0)
-                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                        <div class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold animate-pulse shadow-sm">
                             {{ $unreadCount > 9 ? '9+' : $unreadCount }}
                         </div>
                     @endif
@@ -317,10 +317,15 @@
         <!-- Mobile User Menu -->
         <div class="px-4 py-3 border-t border-gray-200 dark:border-border-dark">
             <div class="flex items-center space-x-3 mb-3 p-3 rounded-xl bg-gradient-to-r from-facebook-50/50 to-purple-50/50 dark:from-facebook-900/10 dark:to-purple-900/10">
-                <img src="{{ Auth::user()->profile && Auth::user()->profile->profile_picture 
-                    ? asset('storage/' . Auth::user()->profile->profile_picture) 
-                    : asset('images/default-avatar.svg') }}" 
-                    class="avatar avatar-md ring-2 ring-facebook-200 dark:ring-facebook-700" alt="Avatar">
+                @if(Auth::user()->profile && Auth::user()->profile->profile_picture)
+                    <img src="{{ Storage::url(Auth::user()->profile->profile_picture) }}" 
+                        class="w-12 h-12 rounded-xl object-cover ring-2 ring-facebook-200 dark:ring-facebook-700 shadow-lg" 
+                        alt="{{ Auth::user()->name }}">
+                @else
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-facebook-400 to-facebook-600 flex items-center justify-center ring-2 ring-facebook-200 dark:ring-facebook-700 shadow-lg">
+                        <span class="text-white font-bold text-xl">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                    </div>
+                @endif
                 <div>
                     <div class="font-semibold text-text-primary dark:text-text-primary-dark">{{ Auth::user()->name }}</div>
                     <div class="text-sm text-text-secondary dark:text-text-secondary-dark">{{ Auth::user()->email }}</div>

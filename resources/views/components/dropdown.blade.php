@@ -1,4 +1,4 @@
-@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'py-1 bg-white'])
+@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'py-1 bg-white dark:bg-background-card-dark'])
 
 @php
 $alignmentClasses = match ($align) {
@@ -9,6 +9,7 @@ $alignmentClasses = match ($align) {
 
 $width = match ($width) {
     '48' => 'w-48',
+    '72' => 'w-72',
     default => $width,
 };
 @endphp
@@ -28,7 +29,7 @@ $width = match ($width) {
             class="absolute z-50 mt-2 {{ $width }} rounded-md shadow-lg {{ $alignmentClasses }}"
             style="display: none;"
             @click="open = false">
-        <div class="rounded-md ring-1 ring-black ring-opacity-5 {{ $contentClasses }}">
+        <div class="rounded-md ring-1 ring-black dark:ring-white ring-opacity-5 dark:ring-opacity-10 {{ $contentClasses }}">
             {{ $content }}
         </div>
     </div>

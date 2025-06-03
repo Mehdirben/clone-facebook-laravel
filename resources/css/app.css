@@ -736,3 +736,228 @@ select:focus-visible {
     visibility: visible;
     opacity: 1;
 }
+
+/* Facebook Authentication Styles */
+.auth-facebook-logo {
+    color: #1877f2;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+}
+
+.auth-input-facebook {
+    border: 1px solid #dddfe2;
+    font-size: 17px;
+    padding: 14px 16px;
+    border-radius: 6px;
+    background: #ffffff;
+    transition: border-color 0.2s ease;
+}
+
+.auth-input-facebook:focus {
+    border-color: #1877f2;
+    box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+    outline: none;
+}
+
+.dark .auth-input-facebook {
+    background: #3a3b3c;
+    border-color: #3e4042;
+    color: #e4e6ea;
+}
+
+.dark .auth-input-facebook:focus {
+    border-color: #1877f2;
+}
+
+.auth-button-facebook {
+    background: #1877f2;
+    border: none;
+    border-radius: 6px;
+    font-size: 20px;
+    line-height: 48px;
+    padding: 0 16px;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.auth-button-facebook:hover {
+    background: #166fe5;
+}
+
+.auth-button-create {
+    background: #42b883;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    line-height: 48px;
+    padding: 0 16px;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.auth-button-create:hover {
+    background: #369870;
+}
+
+.auth-form-container {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.dark .auth-form-container {
+    background: #242526;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.auth-divider {
+    border-top: 1px solid #dadde1;
+    margin: 20px 0;
+}
+
+.dark .auth-divider {
+    border-color: #3e4042;
+}
+
+.auth-footer-links {
+    color: #8a8d91;
+    font-size: 12px;
+    line-height: 14px;
+}
+
+.auth-footer-links a {
+    color: #8a8d91;
+    text-decoration: none;
+}
+
+.auth-footer-links a:hover {
+    text-decoration: underline;
+}
+
+.dark .auth-footer-links,
+.dark .auth-footer-links a {
+    color: #8a8d91;
+}
+
+/* Responsive adjustments for auth pages */
+@media (max-width: 768px) {
+    .auth-facebook-logo {
+        font-size: 48px;
+        text-align: center;
+    }
+    
+    .auth-form-container {
+        margin: 0 16px;
+        padding: 16px;
+    }
+    
+    .auth-grid-mobile {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}
+
+/* Animation for form elements */
+.auth-input-facebook {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.auth-button-facebook,
+.auth-button-create {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auth-button-facebook:active,
+.auth-button-create:active {
+    transform: scale(0.98);
+}
+
+/* Form validation styling */
+.auth-error {
+    color: #f02849;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.auth-input-error {
+    border-color: #f02849 !important;
+}
+
+.auth-input-error:focus {
+    box-shadow: 0 0 0 2px rgba(240, 40, 73, 0.2) !important;
+}
+
+/* Gender selection styling */
+.auth-gender-option {
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.auth-gender-option:hover {
+    border-color: #1877f2;
+}
+
+.dark .auth-gender-option {
+    border-color: #3e4042;
+    background: #3a3b3c;
+}
+
+/* Birthday select styling */
+.auth-select {
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background: #ffffff;
+    font-size: 15px;
+    color: #1c1e21;
+}
+
+.dark .auth-select {
+    background: #3a3b3c;
+    border-color: #3e4042;
+    color: #e4e6ea;
+}
+
+.auth-select:focus {
+    border-color: #1877f2;
+    outline: none;
+}
+
+/* Terms text styling */
+.auth-terms {
+    color: #777;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.auth-terms a {
+    color: #385898;
+    text-decoration: none;
+}
+
+.auth-terms a:hover {
+    text-decoration: underline;
+}
+
+.dark .auth-terms {
+    color: #b0b3b8;
+}
+
+.dark .auth-terms a {
+    color: #1877f2;
+}

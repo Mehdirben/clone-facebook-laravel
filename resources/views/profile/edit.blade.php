@@ -247,7 +247,7 @@
                                         <label for="phone" class="block text-text-primary dark:text-text-primary-dark font-semibold mb-2">Téléphone</label>
                                         <input type="tel" name="phone" id="phone" value="{{ old('phone', $profile->phone ?? '') }}" 
                                                class="w-full border-0 bg-background-hover dark:bg-background-hover-dark rounded-xl px-4 py-3 focus:ring-2 focus:ring-facebook-500 text-text-primary dark:text-text-primary-dark placeholder-text-muted dark:placeholder-text-muted-dark transition-all duration-300 @error('phone') ring-2 ring-red-500 @enderror"
-                                               placeholder="+33 1 23 45 67 89">
+                                               placeholder="+212 6 61 45 67 89">
                                         @error('phone')
                                             <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                         @enderror

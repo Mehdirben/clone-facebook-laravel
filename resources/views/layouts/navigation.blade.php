@@ -9,7 +9,7 @@
                         <div class="w-10 h-10 bg-gradient-to-br from-facebook-500 to-facebook-600 rounded-full flex items-center justify-center group-hover:shadow-glow transition-all duration-300">
                             <i class="fab fa-facebook-f text-white text-lg group-hover:scale-110 transition-transform"></i>
                         </div>
-                        <span class="text-xl font-bold text-gradient hidden sm:block group-hover:scale-105 transition-transform">SocialBook</span>
+                        <span class="text-xl font-bold text-gradient hidden sm:block group-hover:scale-105 transition-transform">Facebook</span>
                     </a>
                 </div>
 

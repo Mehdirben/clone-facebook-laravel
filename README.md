@@ -47,7 +47,7 @@ A full-featured Facebook clone built with Laravel 12, featuring real-time social
 - **Composer**: Latest version
 - **Node.js**: 18.x or higher
 - **NPM**: Latest version
-- **Database**: PostgreSQL 13+ / SQLite 3.35+ (for development)
+- **Database**: PostgreSQL 13+
 
 ### PHP Extensions
 - BCMath PHP Extension
@@ -99,17 +99,8 @@ DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-**For SQLite (development/testing):**
-```env
-DB_CONNECTION=sqlite
-DB_DATABASE=database/database.sqlite
-```
-
 ### 5. Database Setup
 ```bash
-# Create SQLite database file (if using SQLite)
-touch database/database.sqlite
-
 # Run migrations
 php artisan migrate
 

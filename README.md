@@ -35,7 +35,7 @@ A full-featured Facebook clone built with Laravel 12, featuring real-time social
 
 - **Backend**: Laravel 12.x (PHP 8.2+)
 - **Frontend**: Blade Templates + Tailwind CSS + Alpine.js
-- **Database**: PostgreSQL (default) / SQLite (development)
+- **Database**: PostgreSQL
 - **Build Tools**: Vite
 - **Authentication**: Laravel Breeze
 - **Development Tools**: Laravel Sail, Pint, Pail

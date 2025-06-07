@@ -1,6 +1,6 @@
 # Facebook Clone - Laravel Social Media Platform
 
-![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat&logo=laravel&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-^12.0-FF2D20?style=flat&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat&logo=php&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC34A?style=flat&logo=alpine.js&logoColor=white)
@@ -31,14 +31,36 @@ A full-featured Facebook clone built with Laravel 12, featuring real-time social
 - **Security** - CSRF protection, authentication, and authorization
 - **Testing** - Comprehensive test suite with PHPUnit
 
+## 📸 Screenshots
+
+### Login Page
+![Login Page](screenshots/login.png)
+*Secure authentication system with modern UI design*
+
+### Dashboard (News Feed)
+![Dashboard](screenshots/dashboard.png)
+*Main news feed with posts, comments, likes, and social interactions*
+
+### Friends Management
+![Friends Page](screenshots/friends.png)
+*Friend requests, suggestions, and friend management interface*
+
+### Notifications
+![Notifications](screenshots/notifications.png)
+*Real-time notification system for social interactions*
+
+### Private Messaging
+![Conversation](screenshots/conversation.png)
+*Direct messaging interface for private conversations between users*
+
 ## 🛠️ Technology Stack
 
-- **Backend**: Laravel 12.x (PHP 8.2+)
+- **Backend**: Laravel ^12.0 (PHP 8.2+)
 - **Frontend**: Blade Templates + Tailwind CSS + Alpine.js
-- **Database**: PostgreSQL
+- **Database**: PostgreSQL with Doctrine DBAL
 - **Build Tools**: Vite
 - **Authentication**: Laravel Breeze
-- **Development Tools**: Laravel Sail, Pint, Pail
+- **Development Tools**: Laravel Sail, Pint, Pail, Concurrently
 
 ## 📋 Requirements
 
@@ -153,11 +175,11 @@ The project includes a convenient development script:
 composer run dev
 ```
 
-This command starts:
-- Laravel development server
-- Queue worker
-- Log monitoring (Pail)
-- Vite asset compilation
+This command starts (using concurrently):
+- 🌐 Laravel development server (`php artisan serve`)
+- ⚡ Queue worker (`php artisan queue:listen`)
+- 📋 Log monitoring (`php artisan pail`)
+- 🎨 Vite asset compilation (`npm run dev`)
 
 ### Individual Services
 ```bash

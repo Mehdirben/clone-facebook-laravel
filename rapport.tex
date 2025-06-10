@@ -106,6 +106,13 @@
     {\large Amine Benhadou\par}
     {\large Mehdi Rtel Bennani\par}
     
+    \vspace{1.5cm}
+    
+    % Supervisor
+    {\large\textbf{Supervis\'e par :}\par}
+    \vspace{0.5cm}
+    {\large Mohammed Ouanan\par}
+    
     \vfill
     
     % University and School
@@ -127,7 +134,7 @@ Ce projet consiste en la cr\'eation d'un clone complet de Facebook utilisant le 
 \begin{itemize}
     \item \textbf{Gestion des utilisateurs} : Inscription, authentification et profils personnalis\'es
     \item \textbf{Syst\`eme de publications} : Cr\'eation, modification et partage de contenu multim\'edia
-    \item \textbf{Interactions sociales} : Likes, commentaires, partages et syst\`eme d'amiti\'e
+    \item \textbf{Interactions sociales} : Likes, commentaires, partages et syst\`eme d'amis
     \item \textbf{Messagerie priv\'ee} : Communication directe entre utilisateurs
     \item \textbf{Notifications en temps r\'eel} : Alertes pour les interactions sociales
     \item \textbf{Interface utilisateur moderne} : Design responsive avec Tailwind CSS
@@ -151,7 +158,7 @@ Les mod\`eles repr\'esentent les entit\'es m\'etier et g\`erent les relations en
     \item \textbf{Comment} : Syst\`eme de commentaires hi\'erarchiques
     \item \textbf{Like} : Gestion des likes sur posts et commentaires
     \item \textbf{Share} : Syst\`eme de partage de publications
-    \item \textbf{Friend} : Gestion des relations d'amiti\'e
+    \item \textbf{Friend} : Gestion des relations d'amis
     \item \textbf{Message} : Messagerie priv\'ee
     \item \textbf{Notification} : Notifications syst\`eme
 \end{itemize}
@@ -170,7 +177,7 @@ resources/views/
 |-- notifications/  # Gestion des notifications
 |-- posts/         # Gestion des publications
 |-- profile/       # Pages de profil
-\`-- welcome.blade.php     # Page d'accueil publique
+|-- welcome.blade.php     # Page d'accueil publique
 \end{lstlisting}
 
 \subsubsection{Controllers (Contr\^oleurs)}
@@ -182,7 +189,7 @@ Les contr\^oleurs g\`erent la logique m\'etier et coordonnent les interactions :
     \item \textbf{CommentController} : Gestion des commentaires
     \item \textbf{LikeController} : Syst\`eme de likes
     \item \textbf{ShareController} : Partage de publications
-    \item \textbf{FriendController} : Gestion des relations d'amiti\'e
+    \item \textbf{FriendController} : Gestion des relations d'amis
     \item \textbf{MessageController} : Messagerie priv\'ee
     \item \textbf{ProfileController} : Gestion des profils
     \item \textbf{NotificationController} : Notifications
@@ -209,7 +216,7 @@ ALTER TABLE friends ADD CONSTRAINT unique_friendship
 ALTER TABLE likes ADD CONSTRAINT unique_like_per_user 
     UNIQUE (user_id, likeable_id, likeable_type);
 
--- Contrainte de v\'erification pour \'eviter l'auto-amiti\'e
+-- Contrainte de verification pour eviter l'auto-amis
 ALTER TABLE friends ADD CONSTRAINT check_no_self_friend 
     CHECK (user_id != friend_id);
 \end{lstlisting}
@@ -333,7 +340,7 @@ class PostController extends Controller
 
 \subsubsection{Eloquent ORM avec relations optimis\'ees}
 \begin{lstlisting}[language=PHP]
-// Mod\`ele User avec relations eager loading
+// Modele User avec relations eager loading
 class User extends Authenticatable
 {
     public function friends()
@@ -358,12 +365,12 @@ class User extends Authenticatable
 
 \subsection{Gestion des relations complexes}
 
-\subsubsection{Probl\`eme :} Syst\`eme d'amiti\'e bidirectionnel
-La relation d'amiti\'e n\'ecessite une logique complexe car un utilisateur peut envoyer OU recevoir une demande d'amiti\'e.
+\subsubsection{Probl\`eme :} Syst\`eme d'amis bidirectionnel
+La relation d'amis n\'ecessite une logique complexe car un utilisateur peut envoyer OU recevoir une demande d'amis.
 
 \subsubsection{Solution adopt\'ee :}
 \begin{lstlisting}[language=PHP]
-// M\'ethode dans le mod\`ele User
+// Methode dans le modele User
 public function friends()
 {
     return $this->sentFriendRequests()
@@ -380,7 +387,7 @@ public function friends()
         );
 }
 
-// V\'erification d'amiti\'e
+// Verification d'amis
 public function isFriendWith(User $user): bool
 {
     return $this->sentFriendRequests()
@@ -407,13 +414,13 @@ $request->validate([
     'video' => 'nullable|mimes:mp4,avi,mov|max:10240'
 ]);
 
-// Stockage s\'ecuris\'e avec g\'en\'eration de noms uniques
+// Stockage securise avec generation de noms uniques
 if ($request->hasFile('image')) {
     $imagePath = $request->file('image')->store('posts/images', 'public');
     $post->image = $imagePath;
 }
 
-// Suppression de l'ancien fichier lors de la mise \`a jour
+// Suppression de l'ancien fichier lors de la mise a jour
 if ($post->image && $request->hasFile('image')) {
     Storage::disk('public')->delete($post->image);
 }
@@ -475,7 +482,7 @@ if ($post->image && $request->hasFile('image')) {
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{screenshots/notifications.png}
-    \caption{Centre de notifications avec alertes pour interactions sociales et demandes d'amiti\'e}
+    \caption{Centre de notifications avec alertes pour interactions sociales et demandes d'amis}
     \label{fig:notifications}
 \end{figure}
 
@@ -483,14 +490,14 @@ if ($post->image && $request->hasFile('image')) {
 
 \subsection{Objectifs atteints}
 
-Le projet \textbf{Clone Facebook} a successfully atteint ses objectifs principaux :
+Le projet \textbf{Clone Facebook} a atteint avec succ\`es ses objectifs principaux :
 
 \subsubsection{Fonctionnalit\'es core impl\'ement\'ees}
 \begin{itemize}
     \item Syst\`eme d'authentification complet et s\'ecuris\'e
     \item CRUD complet pour les publications avec m\'edias
     \item Interactions sociales avanc\'ees (likes, commentaires, partages)
-    \item Syst\`eme d'amiti\'e bidirectionnel fonctionnel
+    \item Syst\`eme d'amis bidirectionnel fonctionnel
     \item Messagerie priv\'ee op\'erationnelle
     \item Notifications en temps r\'eel
     \item Interface moderne et responsive
@@ -531,7 +538,7 @@ Le projet \textbf{Clone Facebook} a successfully atteint ses objectifs principau
 \begin{enumerate}
     \item \textbf{Notifications temps r\'eel avanc\'ees}
     \begin{lstlisting}[language=PHP]
-// Impl\'ementation de WebSockets avec Pusher
+// Implementation de WebSockets avec Pusher
 use Pusher\Pusher;
 
 public function sendNotification($user, $type, $data)
@@ -547,7 +554,7 @@ public function sendNotification($user, $type, $data)
 
     \item \textbf{Cache et optimisation}
     \begin{lstlisting}[language=PHP]
-// Cache des requ\^etes fr\'equentes
+// Cache des requetes frequentes
 $popularPosts = Cache::remember('popular_posts', 3600, function() {
     return Post::withCount('likes')
                ->orderBy('likes_count', 'desc')
@@ -572,20 +579,8 @@ L'exp\'erience acquise lors de ce d\'eveloppement fournit une expertise pr\'ecie
     \item \textbf{Backend} : Laravel 12, PHP 8.2+
     \item \textbf{Frontend} : Blade, Tailwind CSS, Alpine.js
     \item \textbf{Base de donn\'ees} : PostgreSQL 13+
-    \item \textbf{Outils} : Vite, Laravel Breeze, Laravel Sail
-    \item \textbf{D\'eploiement} : VPS avec configuration automatis\'ee
-\end{itemize}
-
-\subsection{M\'etriques du projet}
-\begin{itemize}
-    \item \textbf{Lignes de code} : ~15,000 lignes
-    \item \textbf{Temps de d\'eveloppement} : 6 semaines
-    \item \textbf{Mod\`eles} : 9 entit\'es principales
-    \item \textbf{Contr\^oleurs} : 12 contr\^oleurs
-    \item \textbf{Vues} : 40+ templates Blade
-    \item \textbf{Migrations} : 12 migrations de base de donn\'ees
-    \item \textbf{Relations} : Relations polymorphiques pour likes
-    \item \textbf{Contraintes} : 3 contraintes uniques principales
+    \item \textbf{Outils} : Vite, Laravel Breeze
+    \item \textbf{D\'eploiement} : Digital Ocean
 \end{itemize}
 
 \end{document}
